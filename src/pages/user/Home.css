@@ -1,0 +1,16 @@
+.home-page {
+  width: 100%;
+  min-height: 100vh;
+  background: #fffdf8;
+  color: #29251f;
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}

@@ -1,0 +1,343 @@
+.pickle-card {
+  width: 100%;
+  background: #fffdf8;
+  overflow: hidden;
+
+  border: 1px solid rgba(23, 53, 42, 0.08);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.pickle-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 14px 30px rgba(23, 53, 42, 0.12);
+}
+
+/* ==================================================
+   IMAGE
+   ================================================== */
+
+.pickle-image-wrap {
+  padding: 8px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #eee7d9,
+      #f8f3e9
+    );
+}
+
+.pickle-image-inner {
+  position: relative;
+
+  width: 100%;
+  aspect-ratio: 1 / 1;
+
+  overflow: hidden;
+
+  background: #e8e1d3;
+}
+
+.pickle-image {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition:
+    transform 0.4s ease;
+}
+
+.pickle-card:hover
+.pickle-image {
+  transform: scale(1.04);
+}
+
+.pickle-image-placeholder {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #17352a;
+  color: #c9a65b;
+
+  font-family: Georgia, serif;
+  font-size: 30px;
+}
+
+/* ==================================================
+   CATEGORY
+   ================================================== */
+
+.pickle-category {
+  position: absolute;
+
+  top: 7px;
+  left: 7px;
+
+  padding: 4px 7px;
+
+  background: #fffdf8;
+  color: #17352a;
+
+  font-size: 8px;
+  font-weight: 700;
+
+  letter-spacing: 0.3px;
+}
+
+/* ==================================================
+   CONTENT
+   ================================================== */
+
+.pickle-card-content {
+  padding: 12px;
+}
+
+/* ==================================================
+   NAME
+   ================================================== */
+
+.pickle-name {
+  margin: 0 0 5px;
+
+  color: #17352a;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 18px;
+  line-height: 1.1;
+
+  font-weight: 400;
+}
+
+/* ==================================================
+   DESCRIPTION
+   ================================================== */
+
+.pickle-description {
+  margin: 0 0 11px;
+
+  color: #71695e;
+
+  font-size: 10px;
+  line-height: 1.4;
+
+  display: -webkit-box;
+ 
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+}
+
+/* ==================================================
+   PORTION + PRICE
+   ================================================== */
+
+.pickle-selection-row {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 9px;
+}
+
+/* SIZE DROPDOWN */
+
+.pickle-portion-select {
+  flex: 1;
+
+  min-width: 0;
+
+  height: 30px;
+
+  padding: 0 8px;
+
+  border: 1px solid #cfc4b2;
+
+  border-radius: 4px;
+
+  background: #fffdf8;
+
+  color: #17352a;
+
+  font-size: 10px;
+
+  outline: none;
+
+  cursor: pointer;
+}
+
+.pickle-portion-select:hover {
+  border-color: #a27d3c;
+}
+
+.pickle-portion-select:focus {
+  border-color: #a27d3c;
+
+  box-shadow:
+    0 0 0 2px
+    rgba(162, 125, 60, 0.08);
+}
+
+/* PRICE */
+
+.pickle-selected-price {
+  min-width: 48px;
+
+  color: #a27d3c;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  text-align: right;
+
+  white-space: nowrap;
+}
+
+/* ==================================================
+   NO PORTIONS
+   ================================================== */
+
+.pickle-no-portions {
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 9px;
+
+  border: 1px dashed #d7cbb8;
+
+  color: #a29a8d;
+
+  font-size: 9px;
+}
+
+/* ==================================================
+   ORDER BUTTON
+   ================================================== */
+
+.pickle-order-button {
+  width: 100%;
+  height: 30px;
+
+  border: 0;
+
+  background: #17352a;
+  color: #fffdf8;
+
+  font-size: 9px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.pickle-order-button span {
+  margin-left: 6px;
+
+  color: #c9a65b;
+
+  font-size: 13px;
+}
+
+.pickle-order-button:hover {
+  background: #a27d3c;
+}
+
+.pickle-order-button:active {
+  transform: scale(0.99);
+}
+
+.pickle-order-button:disabled {
+  background: #bcc2bd;
+
+  color: #fff;
+
+  cursor: not-allowed;
+}
+
+/* ==================================================
+   MOBILE
+   ================================================== */
+
+@media (max-width: 600px) {
+
+  .pickle-image-wrap {
+    padding: 6px;
+  }
+
+  .pickle-card-content {
+    padding: 9px;
+  }
+
+  .pickle-name {
+    font-size: 15px;
+  }
+
+  .pickle-description {
+    font-size: 8px;
+
+    margin-bottom: 8px;
+  }
+
+  .pickle-selection-row {
+    gap: 5px;
+
+    margin-bottom: 7px;
+  }
+
+  .pickle-portion-select {
+    height: 27px;
+
+    padding: 0 5px;
+
+    font-size: 8px;
+  }
+
+  .pickle-selected-price {
+    min-width: 40px;
+
+    font-size: 11px;
+  }
+
+  .pickle-order-button {
+    height: 27px;
+
+    font-size: 8px;
+  }
+
+  .pickle-category {
+    top: 5px;
+    left: 5px;
+
+    padding: 3px 5px;
+
+    font-size: 6px;
+  }
+}

@@ -1,0 +1,461 @@
+.luxury-owner {
+  min-height: 100vh;
+  background: #f5f0e5;
+  color: #26382d;
+  display: flex;
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.luxury-sidebar {
+  width: 270px;
+  min-height: 100vh;
+
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  background: #17352a;
+  color: #f8f1df;
+
+  padding: 38px 28px;
+
+  display: flex;
+  flex-direction: column;
+
+  box-shadow: 8px 0 35px rgba(23, 53, 42, 0.08);
+}
+
+
+/* BRAND */
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-circle {
+  width: 52px;
+  height: 52px;
+
+  border-radius: 50%;
+
+  border: 1px solid #c9a65b;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #d7b66a;
+
+  font-family: Georgia, serif;
+  font-size: 17px;
+  letter-spacing: 1px;
+}
+
+.sidebar-brand h2 {
+  margin: 0;
+
+  font-family: Georgia, serif;
+  font-size: 22px;
+  font-weight: 500;
+
+  color: #f7f0df;
+}
+
+.sidebar-brand span {
+  display: block;
+
+  margin-top: 4px;
+
+  font-size: 8px;
+  letter-spacing: 2px;
+
+  color: #c8aa6a;
+}
+
+
+/* LINE */
+
+.sidebar-line {
+  width: 100%;
+  height: 1px;
+
+  background: rgba(215, 182, 106, 0.25);
+
+  margin: 35px 0;
+}
+
+
+/* MENU */
+
+.luxury-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.luxury-menu a {
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 15px 13px;
+
+  color: #e8e1d2;
+  text-decoration: none;
+
+  font-size: 14px;
+
+  border: 1px solid transparent;
+  border-radius: 8px;
+
+  transition: all 0.3s ease;
+}
+
+.luxury-menu a:hover {
+  background: rgba(255, 255, 255, 0.05);
+
+  border-color: rgba(201, 166, 91, 0.25);
+
+  color: #d9b86b;
+
+  transform: translateX(4px);
+}
+
+.menu-number {
+  color: #c8a45b;
+
+  font-family: Georgia, serif;
+
+  font-size: 12px;
+
+  letter-spacing: 1px;
+}
+
+
+/* BOTTOM */
+
+.sidebar-bottom {
+  margin-top: auto;
+
+  text-align: center;
+}
+
+.gold-line {
+  width: 45px;
+  height: 1px;
+
+  background: #c9a65b;
+
+  margin: 0 auto 15px;
+}
+
+.sidebar-bottom p {
+  margin: 0;
+
+  font-family: Georgia, serif;
+
+  font-size: 12px;
+
+  color: #a9b3a8;
+
+  font-style: italic;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.luxury-main {
+  margin-left: 270px;
+
+  width: calc(100% - 270px);
+
+  min-height: 100vh;
+
+  padding: 80px 75px;
+}
+
+
+/* HEADING */
+
+.luxury-heading {
+  max-width: 760px;
+}
+
+.eyebrow {
+  color: #a9823d;
+
+  font-size: 11px;
+
+  letter-spacing: 4px;
+
+  font-weight: 600;
+}
+
+.heading-line {
+  width: 50px;
+  height: 1px;
+
+  background: #c9a65b;
+
+  margin: 18px 0;
+}
+
+.luxury-heading h1 {
+  margin: 0;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: clamp(42px, 5vw, 64px);
+
+  font-weight: 400;
+
+  color: #19372b;
+
+  letter-spacing: -1px;
+}
+
+.luxury-heading p {
+  margin-top: 18px;
+
+  max-width: 650px;
+
+  color: #706c61;
+
+  font-size: 16px;
+
+  line-height: 1.8;
+}
+
+
+/* =========================
+   MANAGEMENT CARDS
+========================= */
+
+.management-grid {
+  margin-top: 65px;
+
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 24px;
+
+  max-width: 1250px;
+}
+
+.management-card {
+  position: relative;
+
+  min-height: 350px;
+
+  padding: 34px;
+
+  background: #fffdf8;
+
+  border: 1px solid #e1d8c7;
+
+  border-radius: 4px;
+
+  text-decoration: none;
+
+  color: inherit;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.management-card::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 3px;
+  height: 0;
+
+  background: #c9a65b;
+
+  transition: height 0.35s ease;
+}
+
+.management-card:hover {
+  transform: translateY(-8px);
+
+  border-color: #cdbb91;
+
+  box-shadow:
+    0 20px 50px rgba(48, 55, 43, 0.10);
+}
+
+.management-card:hover::before {
+  height: 100%;
+}
+
+
+/* CARD NUMBER */
+
+.card-number {
+  color: #b18b48;
+
+  font-size: 11px;
+
+  letter-spacing: 2px;
+}
+
+
+/* ICON */
+
+.card-icon {
+  margin-top: 40px;
+
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+
+  border: 1px solid #c9a65b;
+
+  color: #b38a42;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 14px;
+}
+
+
+/* TITLE */
+
+.management-card h2 {
+  margin-top: 28px;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 27px;
+
+  font-weight: 400;
+
+  color: #213b2e;
+}
+
+
+/* DESCRIPTION */
+
+.management-card p {
+  margin-top: 13px;
+
+  color: #777267;
+
+  font-size: 14px;
+
+  line-height: 1.7;
+}
+
+
+/* ACTION */
+
+.card-action {
+  position: absolute;
+
+  bottom: 30px;
+
+  left: 34px;
+
+  color: #a47b37;
+
+  font-size: 12px;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+}
+
+.card-action span {
+  margin-left: 8px;
+
+  font-size: 16px;
+
+  transition: margin-left 0.2s ease;
+}
+
+.management-card:hover .card-action span {
+  margin-left: 15px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1100px) {
+
+  .management-grid {
+    grid-template-columns: 1fr;
+    max-width: 700px;
+  }
+
+  .management-card {
+    min-height: 300px;
+  }
+}
+
+
+@media (max-width: 750px) {
+
+  .luxury-sidebar {
+    position: relative;
+
+    width: 100%;
+
+    min-height: auto;
+
+    padding: 25px;
+  }
+
+  .luxury-owner {
+    display: block;
+  }
+
+  .luxury-main {
+    margin-left: 0;
+
+    width: 100%;
+
+    padding: 45px 25px;
+  }
+
+  .luxury-menu {
+    flex-direction: row;
+
+    overflow-x: auto;
+  }
+
+  .luxury-menu a {
+    white-space: nowrap;
+  }
+
+  .sidebar-bottom {
+    display: none;
+  }
+
+  .luxury-heading h1 {
+    font-size: 42px;
+  }
+}

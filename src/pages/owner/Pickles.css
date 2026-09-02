@@ -1,0 +1,953 @@
+/* =========================================
+   OWNER PICKLES PAGE
+========================================= */
+
+.owner-page {
+  min-height: 100vh;
+  background: #f5f0e5;
+  color: #26382d;
+  padding: 55px 45px 80px;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.owner-page-header {
+  max-width: 1250px;
+  margin: 0 auto 45px;
+}
+
+.owner-page-header span {
+  color: #a27d3c;
+  font-size: 10px;
+  letter-spacing: 4px;
+  font-weight: 600;
+}
+
+.owner-page-header h1 {
+  margin-top: 10px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 52px;
+  line-height: 1;
+  font-weight: 400;
+  color: #19372b;
+}
+
+.owner-page-header p {
+  margin-top: 13px;
+  color: #777267;
+  font-size: 14px;
+}
+
+
+/* =========================================
+   MAIN MANAGEMENT
+========================================= */
+
+.pickle-management {
+  max-width: 1250px;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 55px;
+}
+
+
+/* =========================================
+   COMMON CARD
+========================================= */
+
+.pickle-form-card,
+.pickle-list-card {
+  background: #fffdf8;
+
+  border: 1px solid #dfd5c2;
+
+  box-shadow:
+    0 15px 45px
+    rgba(50, 55, 40, 0.06);
+}
+
+
+/* =========================================
+   FORM CARD
+========================================= */
+
+.pickle-form-card {
+  padding: 42px;
+}
+
+
+/* =========================================
+   FORM HEADING
+========================================= */
+
+.form-heading span {
+  display: block;
+
+  color: #a27d3c;
+
+  font-size: 10px;
+
+  letter-spacing: 3px;
+
+  font-weight: 600;
+}
+
+.form-heading h2 {
+  margin-top: 8px;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 30px;
+
+  font-weight: 400;
+
+  color: #19372b;
+}
+
+
+/* =========================================
+   FORM
+========================================= */
+
+.pickle-form-card form {
+  margin-top: 35px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+
+  margin-bottom: 25px;
+}
+
+.form-group label {
+  color: #4b5149;
+
+  font-size: 11px;
+
+  letter-spacing: 1.2px;
+
+  text-transform: uppercase;
+
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+
+  border: 1px solid #d9d0bf;
+
+  background: #fbf8f0;
+
+  color: #26382d;
+
+  padding: 13px 14px;
+
+  outline: none;
+
+  border-radius: 3px;
+
+  transition: 0.25s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: #b8934d;
+
+  background: #fffdf8;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(201, 166, 91, 0.08);
+}
+
+.form-group textarea {
+  resize: vertical;
+
+  min-height: 105px;
+}
+
+
+/* =========================================
+   PORTION DESCRIPTION
+========================================= */
+
+.portion-description {
+  margin-top: -2px;
+
+  margin-bottom: 8px;
+
+  color: #81796e;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================
+   PORTION SELECTION
+========================================= */
+
+.portion-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 8px;
+
+  margin-top: 4px;
+}
+
+.portion-option {
+  min-height: 43px;
+
+  border:
+    1px solid
+    rgba(23, 53, 42, 0.18);
+
+  background: #f7f2e8;
+
+  color: #17352a;
+
+  cursor: pointer;
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border 0.2s ease,
+    transform 0.2s ease;
+}
+
+.portion-option:hover {
+  border-color: #c9a65b;
+
+  transform:
+    translateY(-1px);
+}
+
+.portion-option span {
+  margin-right: 5px;
+
+  color: #a27d3c;
+}
+
+.portion-option.selected {
+  border-color: #c9a65b;
+
+  background: #17352a;
+
+  color: #fffdf8;
+}
+
+.portion-option.selected span {
+  color: #c9a65b;
+}
+
+
+/* =========================================
+   PORTION PRICE LIST
+========================================= */
+
+.portion-price-list {
+  margin-top: 2px;
+
+  border:
+    1px solid #e0d7c7;
+
+  background: #faf7ef;
+}
+
+.portion-price-row {
+  display: grid;
+
+  grid-template-columns:
+    1fr 180px;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 10px 13px;
+
+  border-bottom:
+    1px solid #ebe4d7;
+}
+
+.portion-price-row:last-child {
+  border-bottom: none;
+}
+
+.portion-name {
+  color: #294234;
+
+  font-family: Georgia, serif;
+
+  font-size: 15px;
+}
+
+.portion-price-input {
+  position: relative;
+}
+
+.portion-price-input > span {
+  position: absolute;
+
+  left: 12px;
+
+  top: 50%;
+
+  transform:
+    translateY(-50%);
+
+  color: #a27d3c;
+
+  font-size: 13px;
+
+  pointer-events: none;
+}
+
+.portion-price-input input {
+  width: 100%;
+
+  padding:
+    10px 10px 10px 27px;
+
+  border:
+    1px solid #d8cebd;
+
+  background: #fffdf8;
+
+  color: #26382d;
+
+  outline: none;
+
+  border-radius: 3px;
+}
+
+.portion-price-input input:focus {
+  border-color: #b8934d;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(201, 166, 91, 0.08);
+}
+
+
+/* =========================================
+   IMAGE
+========================================= */
+
+.selected-file {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #a27d3c;
+
+  font-size: 10px;
+}
+
+.existing-image {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: 5px;
+}
+
+.existing-image img {
+  width: 60px;
+
+  height: 60px;
+
+  object-fit: cover;
+
+  border:
+    1px solid #d9cfbd;
+}
+
+.existing-image span {
+  color: #8c8479;
+
+  font-size: 10px;
+}
+
+
+/* =========================================
+   ACTIVE CHECKBOX
+========================================= */
+
+.active-checkbox {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  margin-top: 8px;
+
+  color: #5e625b;
+
+  font-size: 12px;
+
+  cursor: pointer;
+}
+
+.active-checkbox input {
+  width: 16px;
+
+  height: 16px;
+
+  accent-color: #9c783c;
+
+  cursor: pointer;
+}
+
+
+/* =========================================
+   FORM ACTIONS
+========================================= */
+
+.form-actions {
+  display: flex;
+
+  gap: 10px;
+
+  margin-top: 28px;
+}
+
+.save-pickle-button {
+  border: none;
+
+  background: #19372b;
+
+  color: #f7f0df;
+
+  padding:
+    14px 27px;
+
+  font-size: 11px;
+
+  letter-spacing: 1.5px;
+
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  transition: 0.3s ease;
+}
+
+.save-pickle-button:hover {
+  background: #c19a50;
+
+  color: white;
+}
+
+.save-pickle-button:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+}
+
+.cancel-pickle-button {
+  border:
+    1px solid #cbbfa9;
+
+  background: transparent;
+
+  padding:
+    14px 24px;
+
+  color: #555d53;
+
+  cursor: pointer;
+
+  font-size: 11px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1px;
+
+  transition: 0.25s ease;
+}
+
+.cancel-pickle-button:hover {
+  border-color: #b8934d;
+
+  color: #9c783c;
+}
+
+
+/* =========================================
+   LIST CARD
+========================================= */
+
+.pickle-list-card {
+  padding: 42px;
+}
+
+.pickle-list-card .form-heading {
+  margin-bottom: 28px;
+}
+
+
+/* =========================================
+   EMPTY
+========================================= */
+
+.pickle-empty {
+  padding: 45px;
+
+  border:
+    1px dashed #d7ccb6;
+
+  text-align: center;
+
+  color: #888277;
+
+  font-size: 13px;
+}
+
+
+/* =========================================
+   OWNER PICKLE LIST
+========================================= */
+
+.owner-pickle-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 12px;
+}
+
+
+/* =========================================
+   OWNER PICKLE ITEM
+========================================= */
+
+.owner-pickle-item {
+  display: grid;
+
+  grid-template-columns:
+    95px 1fr auto;
+
+  gap: 20px;
+
+  align-items: center;
+
+  padding: 15px;
+
+  background: #fffdf8;
+
+  border:
+    1px solid #e1d8c7;
+
+  transition: 0.25s ease;
+}
+
+.owner-pickle-item:hover {
+  border-color: #c9ad70;
+
+  box-shadow:
+    0 10px 30px
+    rgba(40, 50, 40, 0.06);
+}
+
+
+/* =========================================
+   OWNER IMAGE
+========================================= */
+
+.owner-pickle-image {
+  width: 95px;
+
+  height: 95px;
+
+  background: #eee7d9;
+
+  overflow: hidden;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+}
+
+.owner-pickle-image img {
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.owner-pickle-image span {
+  color: #aa843f;
+
+  font-family: Georgia, serif;
+
+  font-size: 18px;
+}
+
+
+/* =========================================
+   INFO
+========================================= */
+
+.owner-pickle-info {
+  min-width: 0;
+}
+
+.owner-pickle-title {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+.owner-pickle-title h3 {
+  font-family: Georgia, serif;
+
+  font-size: 21px;
+
+  font-weight: 400;
+
+  color: #213d30;
+}
+
+.owner-pickle-info > small {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #a27d3c;
+
+  font-size: 9px;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+}
+
+.owner-pickle-info > p {
+  margin-top: 7px;
+
+  color: #858076;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+
+  max-width: 600px;
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+.status-active,
+.status-hidden {
+  padding:
+    5px 8px;
+
+  border-radius: 20px;
+
+  font-size: 8px;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+}
+
+.status-active {
+  color: #48634f;
+
+  background: #e8eee8;
+}
+
+.status-hidden {
+  color: #8b675b;
+
+  background: #f1e7e3;
+}
+
+
+/* =========================================
+   OWNER PORTIONS
+========================================= */
+
+.owner-portions {
+  margin-top: 13px;
+}
+
+.owner-portions > span {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #8b8378;
+
+  font-size: 8px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1.2px;
+}
+
+.owner-portions > div {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 5px;
+}
+
+.owner-portions b {
+  padding:
+    5px 8px;
+
+  border:
+    1px solid
+    rgba(201, 166, 91, 0.45);
+
+  background: #f7f2e8;
+
+  color: #17352a;
+
+  font-size: 9px;
+
+  font-weight: 600;
+}
+
+
+/* =========================================
+   LOWEST / MAIN PRICE
+========================================= */
+
+.owner-pickle-price {
+  display: block;
+
+  margin-top: 11px;
+
+  font-family: Georgia, serif;
+
+  font-size: 16px;
+
+  font-weight: 400;
+
+  color: #263d31;
+}
+
+
+/* =========================================
+   ACTIONS
+========================================= */
+
+.owner-pickle-actions {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 6px;
+
+  min-width: 70px;
+}
+
+.owner-pickle-actions button {
+  border:
+    1px solid #d5cbb8;
+
+  background: transparent;
+
+  color: #596057;
+
+  padding:
+    8px 10px;
+
+  cursor: pointer;
+
+  font-size: 10px;
+
+  transition: 0.2s ease;
+}
+
+.owner-pickle-actions button:hover {
+  border-color: #b8934d;
+
+  color: #9c783c;
+}
+
+.owner-pickle-actions .delete-button {
+  color: #8b6258;
+}
+
+.owner-pickle-actions .delete-button:hover {
+  border-color: #a97868;
+
+  color: #9a5544;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 900px) {
+
+  .owner-page {
+    padding:
+      40px 25px 60px;
+  }
+
+  .pickle-form-card,
+  .pickle-list-card {
+    padding: 30px;
+  }
+
+  .owner-pickle-item {
+    grid-template-columns:
+      80px 1fr;
+  }
+
+  .owner-pickle-image {
+    width: 80px;
+
+    height: 80px;
+  }
+
+  .owner-pickle-actions {
+    grid-column: 2;
+
+    flex-direction: row;
+
+    justify-content: flex-start;
+  }
+
+  .owner-pickle-actions button {
+    min-width: 70px;
+  }
+
+  .portion-grid {
+    grid-template-columns:
+      repeat(4, 1fr);
+  }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+  .owner-page {
+    padding:
+      30px 15px 50px;
+  }
+
+  .owner-page-header {
+    margin-bottom: 30px;
+  }
+
+  .owner-page-header h1 {
+    font-size: 40px;
+  }
+
+  .owner-page-header p {
+    font-size: 13px;
+  }
+
+  .pickle-form-card,
+  .pickle-list-card {
+    padding: 22px 17px;
+  }
+
+  .form-heading h2 {
+    font-size: 25px;
+  }
+
+  .portion-grid {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+  .portion-price-row {
+    grid-template-columns:
+      1fr 125px;
+  }
+
+  .portion-name {
+    font-size: 13px;
+  }
+
+  .owner-pickle-item {
+    grid-template-columns:
+      65px 1fr;
+
+    gap: 12px;
+
+    padding: 12px;
+  }
+
+  .owner-pickle-image {
+    width: 65px;
+
+    height: 65px;
+  }
+
+  .owner-pickle-title {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 5px;
+  }
+
+  .owner-pickle-title h3 {
+    font-size: 18px;
+  }
+
+  .owner-pickle-actions {
+    grid-column: 1 / -1;
+
+    display: grid;
+
+    grid-template-columns:
+      repeat(3, 1fr);
+  }
+
+  .owner-pickle-actions button {
+    width: 100%;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .save-pickle-button,
+  .cancel-pickle-button {
+    width: 100%;
+  }
+}
