@@ -4,39 +4,54 @@ import "./Navbar.css";
 function Navbar({
   business,
   onOpenOrder,
-  onScrollToStory,
   onScrollToKitchen,
   onScrollToCollection,
 }) {
-  const [menuOpen, setMenuOpen] =
-    useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const businessName =
-    business?.business_name ||
-    "Keerthi's Pickles";
+    business?.business_name || "Keerthi's Pickles";
+
+  const logoUrl = business?.logo_url || "";
 
   function closeMenu() {
     setMenuOpen(false);
   }
 
+  function goHome() {
+    closeMenu();
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+
   return (
     <header className="user-navbar">
-
       <div className="navbar-inner">
 
-        <button
-          className="navbar-brand"
-          onClick={() => {
-            closeMenu();
+        {/* ==========================================
+            BRAND
+        ========================================== */}
 
-            window.scrollTo({
-              top: 0,
-              behavior: "smooth",
-            });
-          }}
+        <button
+          type="button"
+          className="navbar-brand"
+          onClick={goHome}
         >
+
           <span className="navbar-logo">
-            KP
+            {logoUrl ? (
+              <img
+                src={logoUrl}
+                alt={businessName}
+              />
+            ) : (
+              <span className="navbar-logo-fallback">
+                KP
+              </span>
+            )}
           </span>
 
           <span className="navbar-brand-text">
@@ -48,24 +63,32 @@ function Navbar({
               HOMEMADE
             </small>
           </span>
+
         </button>
 
+        {/* ==========================================
+            MOBILE MENU BUTTON
+        ========================================== */}
+
         <button
+          type="button"
           className={`mobile-menu-button ${
-            menuOpen
-              ? "active"
-              : ""
+            menuOpen ? "active" : ""
           }`}
           onClick={() =>
-            setMenuOpen(
-              (value) => !value
-            )
+            setMenuOpen((value) => !value)
           }
+          aria-label="Toggle menu"
+          aria-expanded={menuOpen}
         >
           <span></span>
           <span></span>
           <span></span>
         </button>
+
+        {/* ==========================================
+            NAVIGATION
+        ========================================== */}
 
         <nav
           className={`navbar-links ${
@@ -74,19 +97,14 @@ function Navbar({
         >
 
           <button
-            onClick={() => {
-              closeMenu();
-
-              window.scrollTo({
-                top: 0,
-                behavior: "smooth",
-              });
-            }}
+            type="button"
+            onClick={goHome}
           >
             Home
           </button>
 
           <button
+            type="button"
             onClick={() => {
               closeMenu();
               onScrollToCollection();
@@ -96,6 +114,7 @@ function Navbar({
           </button>
 
           <button
+            type="button"
             onClick={() => {
               closeMenu();
               onScrollToKitchen();
@@ -105,6 +124,7 @@ function Navbar({
           </button>
 
           <button
+            type="button"
             className="navbar-order-button"
             onClick={() => {
               closeMenu();
@@ -117,7 +137,6 @@ function Navbar({
         </nav>
 
       </div>
-
     </header>
   );
 }

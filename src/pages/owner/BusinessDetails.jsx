@@ -3,7 +3,6 @@ import { supabase } from "../../services/supabase";
 import "./BusinessDetails.css";
 
 function BusinessDetails() {
-
   const [form, setForm] = useState({
     business_name: "",
     tagline: "",
@@ -16,11 +15,9 @@ function BusinessDetails() {
     instagram_url: "",
     facebook_url: "",
     logo_url: "",
-    hero_image_url: "",
   });
 
   const [logoFile, setLogoFile] = useState(null);
-  const [heroFile, setHeroFile] = useState(null);
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -30,8 +27,11 @@ function BusinessDetails() {
     loadBusiness();
   }, []);
 
-  async function loadBusiness() {
+  // ==================================================
+  // LOAD BUSINESS DETAILS
+  // ==================================================
 
+  async function loadBusiness() {
     const { data, error } = await supabase
       .from("business_details")
       .select("*")
@@ -58,12 +58,15 @@ function BusinessDetails() {
         instagram_url: data.instagram_url || "",
         facebook_url: data.facebook_url || "",
         logo_url: data.logo_url || "",
-        hero_image_url: data.hero_image_url || "",
       });
     }
 
     setLoading(false);
   }
+
+  // ==================================================
+  // HANDLE TEXT CHANGE
+  // ==================================================
 
   function handleChange(e) {
     setForm({
@@ -72,8 +75,11 @@ function BusinessDetails() {
     });
   }
 
-  async function uploadFile(file, bucket) {
+  // ==================================================
+  // UPLOAD LOGO
+  // ==================================================
 
+  async function uploadLogo(file) {
     if (!file) {
       return null;
     }
@@ -84,11 +90,9 @@ function BusinessDetails() {
       .toString(36)
       .substring(2)}.${extension}`;
 
-    const filePath = fileName;
-
     const { error } = await supabase.storage
-      .from(bucket)
-      .upload(filePath, file, {
+      .from("business-images")
+      .upload(fileName, file, {
         cacheControl: "3600",
         upsert: false,
       });
@@ -98,104 +102,126 @@ function BusinessDetails() {
     }
 
     const { data } = supabase.storage
-      .from(bucket)
-      .getPublicUrl(filePath);
+      .from("business-images")
+      .getPublicUrl(fileName);
 
     return data.publicUrl;
   }
 
-  async function handleSave(e) {
+  // ==================================================
+  // SAVE BUSINESS DETAILS
+  // ==================================================
 
+  async function handleSave(e) {
     e.preventDefault();
 
     setSaving(true);
     setMessage("");
 
     try {
-
       let logoUrl = form.logo_url;
-      let heroUrl = form.hero_image_url;
 
+      // Upload new logo if selected
       if (logoFile) {
-        logoUrl = await uploadFile(
-          logoFile,
-          "business-images"
-        );
-      }
-
-      if (heroFile) {
-        heroUrl = await uploadFile(
-          heroFile,
-          "business-images"
-        );
+        logoUrl = await uploadLogo(logoFile);
       }
 
       const payload = {
-        ...form,
+        business_name: form.business_name,
+        tagline: form.tagline,
+        description: form.description,
+        phone: form.phone,
+        whatsapp: form.whatsapp,
+        email: form.email,
+        address: form.address,
+        city: form.city,
+        instagram_url: form.instagram_url,
+        facebook_url: form.facebook_url,
         logo_url: logoUrl,
-        hero_image_url: heroUrl,
         updated_at: new Date().toISOString(),
       };
 
-      delete payload.logo_url_temp;
-      delete payload.hero_image_url_temp;
+      // ==================================================
+      // CHECK EXISTING BUSINESS RECORD
+      // ==================================================
 
-      const { data: existing } = await supabase
-        .from("business_details")
-        .select("id")
-        .limit(1)
-        .maybeSingle();
+      const { data: existing, error: existingError } =
+        await supabase
+          .from("business_details")
+          .select("id")
+          .limit(1)
+          .maybeSingle();
 
-      let error;
+      if (existingError) {
+        throw existingError;
+      }
+
+      // ==================================================
+      // UPDATE EXISTING
+      // ==================================================
 
       if (existing) {
-
-        const result = await supabase
+        const { error } = await supabase
           .from("business_details")
           .update(payload)
           .eq("id", existing.id);
 
-        error = result.error;
+        if (error) {
+          throw error;
+        }
+      }
 
-      } else {
+      // ==================================================
+      // INSERT NEW
+      // ==================================================
 
-        const result = await supabase
+      else {
+        const { error } = await supabase
           .from("business_details")
           .insert(payload);
 
-        error = result.error;
+        if (error) {
+          throw error;
+        }
       }
 
-      if (error) {
-        throw error;
-      }
+      // ==================================================
+      // UPDATE LOCAL FORM
+      // ==================================================
 
       setForm({
         ...form,
         logo_url: logoUrl,
-        hero_image_url: heroUrl,
       });
 
       setLogoFile(null);
-      setHeroFile(null);
+
+      // Clear file input
+      const input =
+        document.getElementById("business-logo");
+
+      if (input) {
+        input.value = "";
+      }
 
       setMessage(
         "Business details saved successfully."
       );
-
     } catch (error) {
-
       console.error(error);
 
       setMessage(
         error.message ||
-        "Unable to save business details."
+          "Unable to save business details."
       );
-
     } finally {
       setSaving(false);
     }
   }
+
+  // ==================================================
+  // LOADING
+  // ==================================================
 
   if (loading) {
     return (
@@ -206,13 +232,25 @@ function BusinessDetails() {
     );
   }
 
+  // ==================================================
+  // PAGE
+  // ==================================================
+
   return (
     <div className="owner-page">
+
+      {/* ==========================================
+          HEADER
+          ========================================== */}
 
       <div className="owner-page-header">
         <div>
           <span>OWNER PANEL</span>
-          <h1>Business Details</h1>
+
+          <h1>
+            Business Details
+          </h1>
+
           <p>
             Manage the information displayed
             on your public website.
@@ -220,19 +258,34 @@ function BusinessDetails() {
         </div>
       </div>
 
+      {/* ==========================================
+          FORM
+          ========================================== */}
+
       <form
         className="business-form"
         onSubmit={handleSave}
       >
 
+        {/* ========================================
+            BASIC INFORMATION
+            ======================================== */}
+
         <section className="form-section">
 
-          <h2>Basic Information</h2>
+          <h2>
+            Basic Information
+          </h2>
 
           <div className="form-grid">
 
+            {/* BUSINESS NAME */}
+
             <div className="form-group">
-              <label>Business Name</label>
+
+              <label>
+                Business Name
+              </label>
 
               <input
                 name="business_name"
@@ -241,10 +294,16 @@ function BusinessDetails() {
                 placeholder="Keerthi's Pickles"
                 required
               />
+
             </div>
 
+            {/* TAGLINE */}
+
             <div className="form-group">
-              <label>Tagline</label>
+
+              <label>
+                Tagline
+              </label>
 
               <input
                 name="tagline"
@@ -252,12 +311,18 @@ function BusinessDetails() {
                 onChange={handleChange}
                 placeholder="Homemade with love"
               />
+
             </div>
 
           </div>
 
+          {/* DESCRIPTION */}
+
           <div className="form-group">
-            <label>Description</label>
+
+            <label>
+              Description
+            </label>
 
             <textarea
               name="description"
@@ -266,18 +331,30 @@ function BusinessDetails() {
               rows="5"
               placeholder="Tell customers about your homemade pickles..."
             />
+
           </div>
 
         </section>
 
+        {/* ========================================
+            CONTACT INFORMATION
+            ======================================== */}
+
         <section className="form-section">
 
-          <h2>Contact Information</h2>
+          <h2>
+            Contact Information
+          </h2>
 
           <div className="form-grid">
 
+            {/* PHONE */}
+
             <div className="form-group">
-              <label>Phone</label>
+
+              <label>
+                Phone
+              </label>
 
               <input
                 name="phone"
@@ -285,10 +362,16 @@ function BusinessDetails() {
                 onChange={handleChange}
                 placeholder="9876543210"
               />
+
             </div>
 
+            {/* WHATSAPP */}
+
             <div className="form-group">
-              <label>WhatsApp</label>
+
+              <label>
+                WhatsApp
+              </label>
 
               <input
                 name="whatsapp"
@@ -296,10 +379,16 @@ function BusinessDetails() {
                 onChange={handleChange}
                 placeholder="919876543210"
               />
+
             </div>
 
+            {/* EMAIL */}
+
             <div className="form-group">
-              <label>Email</label>
+
+              <label>
+                Email
+              </label>
 
               <input
                 type="email"
@@ -308,10 +397,16 @@ function BusinessDetails() {
                 onChange={handleChange}
                 placeholder="example@gmail.com"
               />
+
             </div>
 
+            {/* CITY */}
+
             <div className="form-group">
-              <label>City</label>
+
+              <label>
+                City
+              </label>
 
               <input
                 name="city"
@@ -319,12 +414,18 @@ function BusinessDetails() {
                 onChange={handleChange}
                 placeholder="Hyderabad"
               />
+
             </div>
 
           </div>
 
+          {/* ADDRESS */}
+
           <div className="form-group">
-            <label>Address</label>
+
+            <label>
+              Address
+            </label>
 
             <textarea
               name="address"
@@ -333,18 +434,30 @@ function BusinessDetails() {
               rows="3"
               placeholder="Business address"
             />
+
           </div>
 
         </section>
 
+        {/* ========================================
+            SOCIAL MEDIA
+            ======================================== */}
+
         <section className="form-section">
 
-          <h2>Social Media</h2>
+          <h2>
+            Social Media
+          </h2>
 
           <div className="form-grid">
 
+            {/* INSTAGRAM */}
+
             <div className="form-group">
-              <label>Instagram URL</label>
+
+              <label>
+                Instagram URL
+              </label>
 
               <input
                 name="instagram_url"
@@ -352,10 +465,16 @@ function BusinessDetails() {
                 onChange={handleChange}
                 placeholder="Instagram profile URL"
               />
+
             </div>
 
+            {/* FACEBOOK */}
+
             <div className="form-group">
-              <label>Facebook URL</label>
+
+              <label>
+                Facebook URL
+              </label>
 
               <input
                 name="facebook_url"
@@ -363,15 +482,22 @@ function BusinessDetails() {
                 onChange={handleChange}
                 placeholder="Facebook page URL"
               />
+
             </div>
 
           </div>
 
         </section>
 
+        {/* ========================================
+            BUSINESS LOGO
+            ======================================== */}
+
         <section className="form-section">
 
-          <h2>Business Images</h2>
+          <h2>
+            Business Logo
+          </h2>
 
           <div className="upload-grid">
 
@@ -382,12 +508,17 @@ function BusinessDetails() {
               </label>
 
               <input
+                id="business-logo"
                 type="file"
                 accept="image/*"
                 onChange={(e) =>
-                  setLogoFile(e.target.files[0])
+                  setLogoFile(
+                    e.target.files?.[0] || null
+                  )
                 }
               />
+
+              {/* CURRENT LOGO */}
 
               {form.logo_url && (
                 <img
@@ -399,39 +530,23 @@ function BusinessDetails() {
 
             </div>
 
-            <div className="upload-box">
-
-              <label>
-                Hero Image
-              </label>
-
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) =>
-                  setHeroFile(e.target.files[0])
-                }
-              />
-
-              {form.hero_image_url && (
-                <img
-                  src={form.hero_image_url}
-                  alt="Hero"
-                  className="preview-hero"
-                />
-              )}
-
-            </div>
-
           </div>
 
         </section>
+
+        {/* ========================================
+            MESSAGE
+            ======================================== */}
 
         {message && (
           <div className="save-message">
             {message}
           </div>
         )}
+
+        {/* ========================================
+            SAVE
+            ======================================== */}
 
         <button
           type="submit"

@@ -6,10 +6,6 @@ function Hero({
   onExplore,
   onKitchen,
 }) {
-  const heroImage =
-    business?.hero_image_url ||
-    business?.logo_url;
-
   const tagline =
     business?.tagline ||
     "Homemade with love";
@@ -21,19 +17,7 @@ function Hero({
   return (
     <section className="hero-section">
 
-      <div
-        className="hero-background"
-        style={
-          heroImage
-            ? {
-                backgroundImage: `linear-gradient(
-                  rgba(23, 53, 42, 0.72),
-                  rgba(23, 53, 42, 0.78)
-                ), url("${heroImage}")`,
-              }
-            : undefined
-        }
-      >
+      <div className="hero-background">
 
         <div className="hero-pattern"></div>
 
@@ -50,13 +34,18 @@ function Hero({
               "Keerthi's Pickles"}
           </h1>
 
-          <h2>{tagline}</h2>
+          <h2>
+            {tagline}
+          </h2>
 
-          <p>{description}</p>
+          <p>
+            {description}
+          </p>
 
           <div className="hero-actions">
 
             <button
+              type="button"
               className="hero-primary"
               onClick={onExplore}
             >
@@ -65,6 +54,7 @@ function Hero({
             </button>
 
             <button
+              type="button"
               className="hero-secondary"
               onClick={onKitchen}
             >
@@ -76,9 +66,19 @@ function Hero({
         </div>
 
         <div className="hero-bottom">
-          <span>EST. HOMEMADE</span>
-          <span>✦</span>
-          <span>MADE WITH CARE</span>
+
+          <span>
+            EST. HOMEMADE
+          </span>
+
+          <span>
+            ✦
+          </span>
+
+          <span>
+            MADE WITH CARE
+          </span>
+
         </div>
 
       </div>

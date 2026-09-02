@@ -2,6 +2,10 @@ import React from "react";
 import "./Videos.css";
 
 function Videos({ videos = [], loading = false }) {
+  const activeVideos = videos.filter(
+    (video) => video && video.video_url
+  );
+
   return (
     <section
       className="videos-section"
@@ -11,7 +15,7 @@ function Videos({ videos = [], loading = false }) {
 
         {/* ==========================================
             HEADER
-            ========================================== */}
+        ========================================== */}
 
         <div className="videos-header">
 
@@ -43,23 +47,30 @@ function Videos({ videos = [], loading = false }) {
 
         </div>
 
+
         {/* ==========================================
             LOADING
-            ========================================== */}
+        ========================================== */}
 
         {loading ? (
 
           <div className="videos-empty">
+
+            <div className="videos-empty-mark">
+              ✦
+            </div>
+
             <p>
               Loading our kitchen...
             </p>
+
           </div>
 
-        ) : videos.length === 0 ? (
+        ) : activeVideos.length === 0 ? (
 
           /* ========================================
-             NO VIDEOS
-             ======================================== */
+             EMPTY
+          ======================================== */
 
           <div className="videos-empty">
 
@@ -82,41 +93,46 @@ function Videos({ videos = [], loading = false }) {
 
           /* ========================================
              VIDEO GRID
-             ======================================== */
+          ======================================== */
 
           <div className="videos-grid">
 
-            {videos
-              .filter(
-                (video) =>
-                  video &&
-                  video.video_url
-              )
-              .map((video) => (
+            {activeVideos.map((video, index) => (
 
-                <article
-                  className="public-video-card"
-                  key={video.id}
-                >
+              <article
+                className="public-video-card"
+                key={video.id || index}
+              >
 
-                  <div className="public-video-wrapper">
+                {/* VIDEO */}
 
-                    <video
-                      src={video.video_url}
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      preload="auto"
-                      disablePictureInPicture
-                      controlsList="nodownload nofullscreen noremoteplayback"
-                    />
+                <div className="public-video-wrapper">
 
+                  <video
+                    src={video.video_url}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    disablePictureInPicture
+                    controls={false}
+                    controlsList="nodownload nofullscreen noremoteplayback"
+                  />
+
+                  {/* SUBTLE OVERLAY */}
+
+                  <div className="video-overlay">
+                    <span>
+                      KEERTHI'S PICKLES
+                    </span>
                   </div>
 
-                </article>
+                </div>
 
-              ))}
+              </article>
+
+            ))}
 
           </div>
 
