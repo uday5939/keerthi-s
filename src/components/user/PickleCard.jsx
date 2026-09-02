@@ -232,7 +232,7 @@ function PickleCard({
             portions.length === 0
           }
         >
-          Order Now
+          Add to Cart
           <span>→</span>
         </button>
 

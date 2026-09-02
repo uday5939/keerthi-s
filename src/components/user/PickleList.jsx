@@ -625,7 +625,7 @@ function PickleList({
                   handleAddAnother
                 }
               >
-                Add to List
+                Add More
                 <span>
                   +
                 </span>

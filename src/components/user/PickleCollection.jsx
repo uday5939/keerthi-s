@@ -14,6 +14,10 @@ function PickleCollection({
   setActiveCategory,
   onOrder,
 }) {
+  // ==================================================
+  // CATEGORIES
+  // ==================================================
+
   const categories = [
     "All",
     "Veg Pickles",
@@ -21,40 +25,96 @@ function PickleCollection({
     "Snacks",
   ];
 
+  // ==================================================
+  // SEARCH
+  // ==================================================
+
+  const [searchTerm, setSearchTerm] =
+    useState("");
+
+  // ==================================================
+  // SHOW MORE
+  // ==================================================
+
   const [visibleCount, setVisibleCount] =
     useState(6);
 
   // ==================================================
-  // RESET WHEN CATEGORY CHANGES
+  // RESET SHOW MORE WHEN FILTER OR SEARCH CHANGES
   // ==================================================
 
   useEffect(() => {
     setVisibleCount(6);
-  }, [activeCategory]);
+  }, [
+    activeCategory,
+    searchTerm,
+  ]);
+
+  // ==================================================
+  // SEARCH PRODUCTS
+  //
+  // Home already sends products filtered by category.
+  //
+  // So here we ONLY add name search.
+  // ==================================================
+
+  const searchedPickles = useMemo(() => {
+    const search =
+      searchTerm.trim().toLowerCase();
+
+    // No search
+    if (!search) {
+      return pickles;
+    }
+
+    // Search by product name
+    return pickles.filter((pickle) =>
+      String(
+        pickle?.name || ""
+      )
+        .toLowerCase()
+        .includes(search)
+    );
+  }, [
+    pickles,
+    searchTerm,
+  ]);
 
   // ==================================================
   // VISIBLE PRODUCTS
   // ==================================================
 
-  const visiblePickles = useMemo(() => {
-    return pickles.slice(
+  const visiblePickles =
+    searchedPickles.slice(
       0,
       visibleCount
     );
-  }, [pickles, visibleCount]);
-
-  const hasMore =
-    visibleCount < pickles.length;
 
   // ==================================================
   // SHOW MORE
   // ==================================================
+
+  const hasMore =
+    visibleCount <
+    searchedPickles.length;
 
   function handleShowMore() {
     setVisibleCount(
       (current) => current + 6
     );
   }
+
+  // ==================================================
+  // CLEAR SEARCH
+  // ==================================================
+
+  function clearSearch() {
+    setSearchTerm("");
+  }
+
+  // ==================================================
+  // PAGE
+  // ==================================================
 
   return (
     <section
@@ -72,17 +132,13 @@ function PickleCollection({
           <div className="collection-heading">
 
             <div className="section-label">
-
-              <span>
-                02
-              </span>
+              <span>02</span>
 
               <i></i>
 
               <span>
                 OUR COLLECTION
               </span>
-
             </div>
 
             <h2>
@@ -98,10 +154,12 @@ function PickleCollection({
           <div className="collection-intro">
 
             <p>
-              Explore our collection of homemade
-              pickles and traditional snacks,
-              prepared with authentic ingredients
-              and generations of flavour.
+              Explore our collection
+              of homemade pickles
+              and traditional snacks,
+              prepared with authentic
+              ingredients and generations
+              of flavour.
             </p>
 
           </div>
@@ -109,7 +167,72 @@ function PickleCollection({
         </div>
 
         {/* ==========================================
-            CATEGORY FILTERS
+            SEARCH
+        ========================================== */}
+
+        <div className="collection-search">
+
+          <div className="collection-search-box">
+
+            {/* SEARCH ICON */}
+
+            <span className="collection-search-icon">
+              <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <circle
+                  cx="11"
+                  cy="11"
+                  r="6.5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                />
+
+                <path
+                  d="M16 16L21 21"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </span>
+
+            {/* INPUT */}
+
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) =>
+                setSearchTerm(
+                  e.target.value
+                )
+              }
+              placeholder="Search pickles..."
+              aria-label="Search pickles"
+            />
+
+            {/* CLEAR */}
+
+            {searchTerm && (
+              <button
+                type="button"
+                className="collection-search-clear"
+                onClick={clearSearch}
+                aria-label="Clear search"
+              >
+                ×
+              </button>
+            )}
+
+          </div>
+
+        </div>
+
+        {/* ==========================================
+            FILTERS
         ========================================== */}
 
         <div className="collection-filters">
@@ -120,7 +243,8 @@ function PickleCollection({
                 key={category}
                 type="button"
                 className={
-                  activeCategory === category
+                  activeCategory ===
+                  category
                     ? "collection-filter active"
                     : "collection-filter"
                 }
@@ -141,22 +265,56 @@ function PickleCollection({
             PRODUCTS
         ========================================== */}
 
-        {pickles.length === 0 ? (
+        {searchedPickles.length === 0 ? (
+
           <div className="collection-empty">
 
-            <h3>
-              No products available
-            </h3>
+            <div className="collection-empty-icon">
+              ⌕
+            </div>
 
-            <p>
-              Please check back soon for our
-              homemade collection.
-            </p>
+            {searchTerm.trim() ? (
+              <>
+                <h3>
+                  No pickles found
+                </h3>
+
+                <p>
+                  We couldn't find a pickle
+                  matching "
+                  {searchTerm}
+                  ".
+                </p>
+
+                <button
+                  type="button"
+                  className="collection-clear-search"
+                  onClick={clearSearch}
+                >
+                  Clear Search
+                </button>
+              </>
+            ) : (
+              <>
+                <h3>
+                  No products available
+                </h3>
+
+                <p>
+                  Please check back soon
+                  for our homemade
+                  collection.
+                </p>
+              </>
+            )}
 
           </div>
+
         ) : (
 
           <>
+
+            {/* PRODUCT GRID */}
 
             <div className="collection-grid">
 
@@ -177,14 +335,18 @@ function PickleCollection({
             ====================================== */}
 
             {hasMore && (
+
               <div className="show-more-wrapper">
 
                 <button
                   type="button"
                   className="show-more-button"
-                  onClick={handleShowMore}
+                  onClick={
+                    handleShowMore
+                  }
                 >
                   Show More
+
                   <span>
                     +
                   </span>
@@ -194,13 +356,15 @@ function PickleCollection({
                   Showing{" "}
                   {visiblePickles.length}{" "}
                   of{" "}
-                  {pickles.length}
+                  {searchedPickles.length}
                 </p>
 
               </div>
+
             )}
 
           </>
+
         )}
 
       </div>

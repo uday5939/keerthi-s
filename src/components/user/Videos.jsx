@@ -1,76 +1,128 @@
 import React from "react";
-
 import "./Videos.css";
 
-function Videos({
-  videos,
-  loading,
-}) {
+function Videos({ videos = [], loading = false }) {
   return (
-    <section className="videos-section" id="our-kitchen">
-
+    <section
+      className="videos-section"
+      id="our-kitchen"
+    >
       <div className="videos-container">
+
+        {/* ==========================================
+            HEADER
+            ========================================== */}
 
         <div className="videos-header">
 
-          <div className="videos-label">
-            <span>03</span>
-            <div></div>
-            FROM OUR KITCHEN
+          <div className="videos-heading">
+
+            <div className="videos-section-label">
+              <span>03</span>
+              <i></i>
+              <span>OUR KITCHEN</span>
+            </div>
+
+            <h2>
+              Made with care.
+              <br />
+              <em>Shared with love.</em>
+            </h2>
+
           </div>
 
-          <h2>
-            Made by hand.
-            <br />
-            <em>Made with love.</em>
-          </h2>
+          <div className="videos-intro">
+
+            <p>
+              Take a glimpse into the care,
+              tradition and homemade goodness
+              behind Keerthi's Pickles.
+            </p>
+
+          </div>
 
         </div>
 
+        {/* ==========================================
+            LOADING
+            ========================================== */}
+
         {loading ? (
-          <div className="videos-loading">
-            Loading videos...
-          </div>
-        ) : videos.length === 0 ? (
+
           <div className="videos-empty">
-            <span>✦</span>
             <p>
-              Our kitchen stories are coming soon.
+              Loading our kitchen...
             </p>
           </div>
-        ) : (
-          <div className="videos-grid">
 
-            {videos.map((video) => (
-              <div
-                className="video-card"
-                key={video.id}
-              >
+        ) : videos.length === 0 ? (
 
-                <video
-                  src={video.video_url}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  controls
-                  preload="metadata"
-                />
+          /* ========================================
+             NO VIDEOS
+             ======================================== */
 
-                <div className="video-overlay">
-                  <span>
-                    KEERTHI'S PICKLES
-                  </span>
-                </div>
+          <div className="videos-empty">
 
-              </div>
-            ))}
+            <div className="videos-empty-mark">
+              ✦
+            </div>
+
+            <h3>
+              Our kitchen is getting ready.
+            </h3>
+
+            <p>
+              New glimpses from our kitchen
+              will appear here soon.
+            </p>
 
           </div>
+
+        ) : (
+
+          /* ========================================
+             VIDEO GRID
+             ======================================== */
+
+          <div className="videos-grid">
+
+            {videos
+              .filter(
+                (video) =>
+                  video &&
+                  video.video_url
+              )
+              .map((video) => (
+
+                <article
+                  className="public-video-card"
+                  key={video.id}
+                >
+
+                  <div className="public-video-wrapper">
+
+                    <video
+                      src={video.video_url}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="auto"
+                      disablePictureInPicture
+                      controlsList="nodownload nofullscreen noremoteplayback"
+                    />
+
+                  </div>
+
+                </article>
+
+              ))}
+
+          </div>
+
         )}
 
       </div>
-
     </section>
   );
 }

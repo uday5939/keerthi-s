@@ -1,149 +1,506 @@
+/* ==================================================
+   VIDEOS SECTION
+   ================================================== */
+
 .videos-section {
-  padding: 110px 20px;
+  width: 100%;
+
+  padding: 90px 24px;
 
   background: #17352a;
-
-  color: #fffdf8;
 }
+
+
+/* ==================================================
+   CONTAINER
+   ================================================== */
 
 .videos-container {
-  width: min(1150px, 100%);
-  margin: auto;
+  width: min(1400px, 100%);
+
+  margin: 0 auto;
 }
 
-.videos-label {
+
+/* ==================================================
+   HEADER
+   ================================================== */
+
+.videos-header {
   display: flex;
+
+  align-items: flex-end;
+
+  justify-content: space-between;
+
+  gap: 50px;
+
+  margin-bottom: 45px;
+}
+
+
+/* ==================================================
+   HEADING
+   ================================================== */
+
+.videos-heading {
+  flex: 1;
+}
+
+
+.videos-section-label {
+  display: flex;
+
   align-items: center;
-  gap: 12px;
+
+  gap: 10px;
+
+  margin-bottom: 18px;
 
   color: #c9a65b;
 
   font-size: 10px;
-  font-weight: bold;
-  letter-spacing: 3px;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
 }
 
-.videos-label span {
-  color: #e0c477;
-}
 
-.videos-label div {
-  width: 45px;
+.videos-section-label i {
+  width: 30px;
+
   height: 1px;
 
   background: #c9a65b;
 }
 
-.videos-header h2 {
-  margin-top: 28px;
 
-  font-family: Georgia, serif;
-  font-size: clamp(45px, 6vw, 70px);
-  font-weight: normal;
-  line-height: 1;
+.videos-heading h2 {
+  margin: 0;
+
+  color: #fffdf8;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size:
+    clamp(
+      38px,
+      4.5vw,
+      62px
+    );
+
+  line-height: 0.98;
+
+  font-weight: 400;
 }
 
-.videos-header h2 em {
+
+.videos-heading h2 em {
   color: #c9a65b;
-  font-weight: normal;
+
+  font-style: italic;
 }
+
+
+/* ==================================================
+   INTRO
+   ================================================== */
+
+.videos-intro {
+  width: 100%;
+
+  max-width: 380px;
+}
+
+
+.videos-intro p {
+  margin: 0;
+
+  color: rgba(
+    255,
+    253,
+    248,
+    0.72
+  );
+
+  font-size: 13px;
+
+  line-height: 1.7;
+}
+
+
+/* ==================================================
+   VIDEO GRID
+   ================================================== */
 
 .videos-grid {
   display: grid;
 
-  grid-template-columns: repeat(
-    3,
-    minmax(0, 1fr)
-  );
+  grid-template-columns:
+    repeat(
+      4,
+      minmax(
+        0,
+        1fr
+      )
+    );
 
-  gap: 20px;
-
-  margin-top: 55px;
+  gap: 18px;
 }
 
-.video-card {
-  position: relative;
 
-  min-height: 430px;
+/* ==================================================
+   VIDEO CARD
+   ================================================== */
+
+.public-video-card {
+  width: 100%;
 
   overflow: hidden;
 
-  background: #10271e;
+  background: #0f241c;
+
+  border: 1px solid
+    rgba(
+      201,
+      166,
+      91,
+      0.25
+    );
+
+  box-shadow:
+    0 12px 35px
+      rgba(
+        0,
+        0,
+        0,
+        0.18
+      );
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
-.video-card video {
-  width: 100%;
-  height: 100%;
 
-  min-height: 430px;
+.public-video-card:hover {
+  transform:
+    translateY(-4px);
+
+  box-shadow:
+    0 18px 40px
+      rgba(
+        0,
+        0,
+        0,
+        0.25
+      );
+}
+
+
+/* ==================================================
+   VIDEO WRAPPER
+   ================================================== */
+
+.public-video-wrapper {
+  position: relative;
+
+  width: 100%;
+
+  aspect-ratio: 9 / 16;
+
+  overflow: hidden;
+
+  background: #0f241c;
+}
+
+
+/* ==================================================
+   VIDEO
+   ================================================== */
+
+.public-video-wrapper video {
+  width: 100%;
+
+  height: 100%;
 
   display: block;
 
   object-fit: cover;
+
+  border: 0;
+
+  outline: none;
+
+  background: #0f241c;
 }
 
-.video-overlay {
-  position: absolute;
-  left: 0;
-  bottom: 0;
 
-  width: 100%;
+/* ==================================================
+   REMOVE INTERACTION / CONTROLS
+   ================================================== */
 
-  padding: 20px;
-
-  background: linear-gradient(
-    transparent,
-    rgba(0, 0, 0, 0.6)
-  );
-
-  pointer-events: none;
+.public-video-wrapper video::-webkit-media-controls {
+  display: none !important;
 }
 
-.video-overlay span {
+.public-video-wrapper video::-webkit-media-controls-panel {
+  display: none !important;
+}
+
+.public-video-wrapper video::-webkit-media-controls-play-button {
+  display: none !important;
+}
+
+.public-video-wrapper video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+}
+
+.public-video-wrapper video::-webkit-media-controls-timeline {
+  display: none !important;
+}
+
+.public-video-wrapper video::-webkit-media-controls-current-time-display {
+  display: none !important;
+}
+
+.public-video-wrapper video::-webkit-media-controls-time-remaining-display {
+  display: none !important;
+}
+
+.public-video-wrapper video::-webkit-media-controls-mute-button {
+  display: none !important;
+}
+
+.public-video-wrapper video::-webkit-media-controls-volume-slider {
+  display: none !important;
+}
+
+.public-video-wrapper video::-webkit-media-controls-fullscreen-button {
+  display: none !important;
+}
+
+
+/* ==================================================
+   EMPTY STATE
+   ================================================== */
+
+.videos-empty {
+  padding: 70px 20px;
+
+  text-align: center;
+
+  border: 1px solid
+    rgba(
+      201,
+      166,
+      91,
+      0.2
+    );
+
+  background:
+    rgba(
+      255,
+      253,
+      248,
+      0.03
+    );
+}
+
+
+.videos-empty-mark {
+  margin-bottom: 15px;
+
+  color: #c9a65b;
+
+  font-family: Georgia, serif;
+
+  font-size: 25px;
+}
+
+
+.videos-empty h3 {
+  margin: 0 0 8px;
+
   color: #fffdf8;
 
-  font-size: 8px;
-  letter-spacing: 3px;
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 25px;
+
+  font-weight: 400;
 }
 
-.videos-loading,
-.videos-empty {
-  min-height: 250px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.videos-empty p {
+  margin: 0;
 
-  color: rgba(255, 253, 248, 0.65);
+  color:
+    rgba(
+      255,
+      253,
+      248,
+      0.65
+    );
+
+  font-size: 13px;
+
+  line-height: 1.6;
 }
 
-.videos-empty {
-  flex-direction: column;
-  gap: 15px;
-}
 
-.videos-empty span {
-  color: #c9a65b;
-  font-size: 30px;
-}
+/* ==================================================
+   TABLET
+   ================================================== */
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
+
   .videos-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns:
+      repeat(
+        3,
+        minmax(
+          0,
+          1fr
+        )
+      );
+
+    gap: 15px;
   }
+
 }
+
+
+/* ==================================================
+   TABLET / SMALL LAPTOP
+   ================================================== */
+
+@media (max-width: 800px) {
+
+  .videos-section {
+    padding: 70px 18px;
+  }
+
+
+  .videos-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 20px;
+
+    margin-bottom: 35px;
+  }
+
+
+  .videos-intro {
+    max-width: 100%;
+  }
+
+
+  .videos-grid {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(
+          0,
+          1fr
+        )
+      );
+
+    gap: 12px;
+  }
+
+}
+
+
+/* ==================================================
+   MOBILE
+   ================================================== */
 
 @media (max-width: 600px) {
+
   .videos-section {
-    padding: 80px 16px;
+    padding: 55px 12px;
   }
+
+
+  .videos-heading h2 {
+    font-size: 35px;
+  }
+
+
+  .videos-section-label {
+    font-size: 8px;
+
+    gap: 8px;
+
+    margin-bottom: 14px;
+  }
+
+
+  .videos-section-label i {
+    width: 24px;
+  }
+
+
+  .videos-intro p {
+    font-size: 11px;
+
+    line-height: 1.6;
+  }
+
 
   .videos-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(
+          0,
+          1fr
+        )
+      );
+
+    gap: 8px;
   }
 
-  .video-card,
-  .video-card video {
-    min-height: 500px;
+
+  .public-video-card {
+    box-shadow:
+      0 8px 20px
+        rgba(
+          0,
+          0,
+          0,
+          0.16
+        );
   }
+
+
+  .public-video-wrapper {
+    aspect-ratio: 9 / 16;
+  }
+
+
+  .videos-empty {
+    padding: 50px 15px;
+  }
+
+
+  .videos-empty h3 {
+    font-size: 21px;
+  }
+
+
+  .videos-empty p {
+    font-size: 11px;
+  }
+
 }
