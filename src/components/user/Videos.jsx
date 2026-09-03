@@ -1,146 +1,138 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { supabase } from "../services/supabase";
 import "./Videos.css";
 
-function Videos({ videos = [], loading = false }) {
-  const activeVideos = videos.filter(
-    (video) => video && video.video_url
-  );
+function OurKitchen() {
+  const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadKitchenImages();
+  }, []);
+
+  async function loadKitchenImages() {
+    setLoading(true);
+
+    const { data, error } = await supabase
+      .from("kitchen_images")
+      .select("id, image_url, display_order")
+      .eq("is_active", true)
+      .order("display_order", {
+        ascending: true,
+      })
+      .order("created_at", {
+        ascending: true,
+      });
+
+    if (error) {
+      console.error(
+        "Unable to load kitchen images:",
+        error
+      );
+
+      setImages([]);
+      setLoading(false);
+
+      return;
+    }
+
+    setImages(data || []);
+    setLoading(false);
+  }
 
   return (
     <section
-      className="videos-section"
-      id="our-kitchen"
+      className="our-kitchen-section"
+      id="kitchen"
     >
-      <div className="videos-container">
+      <div className="our-kitchen-container">
 
-        {/* ==========================================
-            HEADER
-        ========================================== */}
+        {/* HEADER */}
 
-        <div className="videos-header">
+        <div className="our-kitchen-header">
 
-          <div className="videos-heading">
+          <div className="our-kitchen-heading">
 
-            <div className="videos-section-label">
+            <div className="our-kitchen-label">
               <span>03</span>
               <i></i>
               <span>OUR KITCHEN</span>
             </div>
 
             <h2>
-              Made with care.
+              Made with care,
               <br />
-              <em>Shared with love.</em>
+              <em>made at home.</em>
             </h2>
 
           </div>
 
-          <div className="videos-intro">
-
+          <div className="our-kitchen-intro">
             <p>
-              Take a glimpse into the care,
-              tradition and homemade goodness
-              behind Keerthi's Pickles.
+              A glimpse into the kitchen
+              where every jar of Keerthi's
+              homemade pickles is prepared
+              with care and tradition.
             </p>
-
           </div>
 
         </div>
 
+      </div>
 
-        {/* ==========================================
-            LOADING
-        ========================================== */}
+      {/* IMAGE STRIP */}
 
-        {loading ? (
+      {loading ? (
+        <div className="our-kitchen-status">
+          Loading our kitchen...
+        </div>
+      ) : images.length === 0 ? (
+        <div className="our-kitchen-status">
+          Our kitchen images will appear here soon.
+        </div>
+      ) : (
+        <div className="kitchen-marquee">
 
-          <div className="videos-empty">
+          <div className="kitchen-marquee-track">
 
-            <div className="videos-empty-mark">
-              ✦
-            </div>
+            {/* FIRST SET */}
 
-            <p>
-              Loading our kitchen...
-            </p>
-
-          </div>
-
-        ) : activeVideos.length === 0 ? (
-
-          /* ========================================
-             EMPTY
-          ======================================== */
-
-          <div className="videos-empty">
-
-            <div className="videos-empty-mark">
-              ✦
-            </div>
-
-            <h3>
-              Our kitchen is getting ready.
-            </h3>
-
-            <p>
-              New glimpses from our kitchen
-              will appear here soon.
-            </p>
-
-          </div>
-
-        ) : (
-
-          /* ========================================
-             VIDEO GRID
-          ======================================== */
-
-          <div className="videos-grid">
-
-            {activeVideos.map((video, index) => (
-
-              <article
-                className="public-video-card"
-                key={video.id || index}
+            {images.map((image) => (
+              <div
+                className="kitchen-image-card"
+                key={`first-${image.id}`}
               >
+                <img
+                  src={image.image_url}
+                  alt="Keerthi's Kitchen"
+                  loading="lazy"
+                />
+              </div>
+            ))}
 
-                {/* VIDEO */}
+            {/* DUPLICATE SET FOR SEAMLESS LOOP */}
 
-                <div className="public-video-wrapper">
-
-                  <video
-                    src={video.video_url}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="metadata"
-                    disablePictureInPicture
-                    controls={false}
-                    controlsList="nodownload nofullscreen noremoteplayback"
-                  />
-
-                  {/* SUBTLE OVERLAY */}
-
-                  <div className="video-overlay">
-                    <span>
-                      KEERTHI'S PICKLES
-                    </span>
-                  </div>
-
-                </div>
-
-              </article>
-
+            {images.map((image) => (
+              <div
+                className="kitchen-image-card"
+                key={`second-${image.id}`}
+                aria-hidden="true"
+              >
+                <img
+                  src={image.image_url}
+                  alt=""
+                  loading="lazy"
+                />
+              </div>
             ))}
 
           </div>
 
-        )}
+        </div>
+      )}
 
-      </div>
     </section>
   );
 }
 
-export default Videos;
+export default OurKitchen;

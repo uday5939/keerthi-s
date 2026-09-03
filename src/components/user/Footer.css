@@ -156,3 +156,38 @@
     line-height: 1.6;
   }
 }
+
+.footer-logo {
+  width: 58px;
+  height: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(201, 166, 91, 0.65);
+  border-radius: 50%;
+
+  overflow: hidden;
+
+  background: #17352a;
+  color: #c9a65b;
+
+  margin-bottom: 20px;
+}
+
+.footer-logo img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+}
+
+.footer-logo span {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  letter-spacing: 2px;
+  color: #c9a65b;
+}

@@ -1,5 +1,4 @@
 import React from "react";
-
 import "./Footer.css";
 
 function Footer({
@@ -15,6 +14,9 @@ function Footer({
     business?.whatsapp ||
     business?.phone;
 
+  const logoUrl =
+    business?.logo_url || null;
+
   return (
     <footer className="user-footer">
 
@@ -22,10 +24,25 @@ function Footer({
 
         <div className="footer-main">
 
+          {/* ==================================================
+              BRAND
+              ================================================== */}
+
           <div className="footer-brand">
 
             <div className="footer-logo">
-              KP
+
+              {logoUrl ? (
+                <img
+                  src={logoUrl}
+                  alt={`${businessName} logo`}
+                />
+              ) : (
+                <span>
+                  KP
+                </span>
+              )}
+
             </div>
 
             <h2>
@@ -39,9 +56,17 @@ function Footer({
 
           </div>
 
+
+          {/* ==================================================
+              LINKS
+              ================================================== */}
+
           <div className="footer-links">
 
+            {/* EXPLORE */}
+
             <div>
+
               <span>
                 EXPLORE
               </span>
@@ -50,8 +75,7 @@ function Footer({
                 onClick={() =>
                   window.scrollTo({
                     top: 0,
-                    behavior:
-                      "smooth",
+                    behavior: "smooth",
                   })
                 }
               >
@@ -59,9 +83,7 @@ function Footer({
               </button>
 
               <button
-                onClick={
-                  onExplore
-                }
+                onClick={onExplore}
               >
                 Explore Pickles
               </button>
@@ -71,9 +93,14 @@ function Footer({
               >
                 Order Now
               </button>
+
             </div>
 
+
+            {/* CONTACT */}
+
             <div>
+
               <span>
                 CONTACT
               </span>
@@ -88,10 +115,9 @@ function Footer({
 
               {whatsapp && (
                 <a
-                  href={`https://wa.me/${whatsapp.replace(
-                    /\D/g,
-                    ""
-                  )}`}
+                  href={`https://wa.me/${String(
+                    whatsapp
+                  ).replace(/\D/g, "")}`}
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -106,9 +132,14 @@ function Footer({
                   {business.email}
                 </a>
               )}
+
             </div>
 
+
+            {/* VISIT */}
+
             <div>
+
               <span>
                 VISIT
               </span>
@@ -122,11 +153,17 @@ function Footer({
                     : ""}
                 </p>
               )}
+
             </div>
 
           </div>
 
         </div>
+
+
+        {/* ==================================================
+            FOOTER BOTTOM
+            ================================================== */}
 
         <div className="footer-bottom">
 

@@ -11,7 +11,7 @@ import Hero from "../../components/user/Hero";
 import Story from "../../components/user/Story";
 import PickleCollection from "../../components/user/PickleCollection";
 import PickleList from "../../components/user/PickleList";
-import Videos from "../../components/user/Videos";
+import OurKitchen from "../../components/user/OurKitchen";
 import Footer from "../../components/user/Footer";
 
 import "./Home.css";
@@ -29,13 +29,6 @@ function Home() {
   // ==================================================
 
   const [pickles, setPickles] =
-    useState([]);
-
-  // ==================================================
-  // VIDEOS
-  // ==================================================
-
-  const [videos, setVideos] =
     useState([]);
 
   const [loading, setLoading] =
@@ -114,36 +107,12 @@ function Home() {
             }
           );
 
-      // ==================================================
-      // LOAD VIDEOS
-      // ==================================================
-
-      const videosPromise =
-        supabase
-          .from("videos")
-          .select("*")
-          .eq("is_active", true)
-          .order(
-            "display_order",
-            {
-              ascending: true,
-            }
-          )
-          .order(
-            "created_at",
-            {
-              ascending: false,
-            }
-          );
-
       const [
         businessResponse,
         picklesResponse,
-        videosResponse,
       ] = await Promise.all([
         businessPromise,
         picklesPromise,
-        videosPromise,
       ]);
 
       // ==================================================
@@ -190,35 +159,14 @@ function Home() {
         );
       }
 
-      // ==================================================
-      // VIDEOS
-      // ==================================================
-
-      if (
-        videosResponse.error
-      ) {
-        console.error(
-          "Videos error:",
-          videosResponse.error
-        );
-
-        setVideos([]);
-
-      } else {
-        setVideos(
-          videosResponse.data ||
-            []
-        );
-      }
-
     } catch (error) {
       console.error(
         "Error loading home:",
         error
       );
 
+      setBusiness(null);
       setPickles([]);
-      setVideos([]);
 
     } finally {
       setLoading(false);
@@ -821,10 +769,11 @@ function Home() {
         }
       />
 
-      <Videos
-        videos={videos}
-        loading={loading}
-      />
+      {/* ==================================================
+          OUR KITCHEN
+          ================================================== */}
+
+      <OurKitchen />
 
       <PickleList
         isOpen={

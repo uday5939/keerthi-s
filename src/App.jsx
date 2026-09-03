@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
   BrowserRouter,
   Routes,
@@ -6,54 +7,88 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import OwnerDashboard
-  from "./pages/owner/OwnerDashboard";
+import Login from "./pages/auth/Login";
 
-import BusinessDetails
-  from "./pages/owner/BusinessDetails";
+import OwnerRoute from "./components/auth/OwnerRoute";
 
-import Pickles
-  from "./pages/owner/Pickles";
+import OwnerDashboard from "./pages/owner/OwnerDashboard";
+import BusinessDetails from "./pages/owner/BusinessDetails";
+import Pickles from "./pages/owner/Pickles";
+import Images from "./pages/owner/Images";
 
-import Videos
-  from "./pages/owner/Videos";
-
-import Home
-  from "./pages/user/Home";
+import Home from "./pages/user/Home";
 
 import "./App.css";
 
 function App() {
-
   return (
     <BrowserRouter>
 
       <Routes>
+
+        {/* ==========================================
+            PUBLIC WEBSITE
+        ========================================== */}
 
         <Route
           path="/"
           element={<Home />}
         />
 
+
+        {/* ==========================================
+            OWNER LOGIN
+        ========================================== */}
+
+        <Route
+          path="/owner/login"
+          element={<Login />}
+        />
+
+
+        {/* ==========================================
+            PROTECTED OWNER AREA
+        ========================================== */}
+
         <Route
           path="/owner"
-          element={<OwnerDashboard />}
-        />
+          element={<OwnerRoute />}
+        >
 
-        <Route
-          path="/owner/business"
-          element={<BusinessDetails />}
-        />
+          {/* /owner */}
 
-        <Route
-          path="/owner/pickles"
-          element={<Pickles />}
-        />
+          <Route
+            index
+            element={<OwnerDashboard />}
+          />
 
-        <Route
-          path="/owner/videos"
-          element={<Videos />}
-        />
+          {/* /owner/business */}
+
+          <Route
+            path="business"
+            element={<BusinessDetails />}
+          />
+
+          {/* /owner/pickles */}
+
+          <Route
+            path="pickles"
+            element={<Pickles />}
+          />
+
+          {/* /owner/images */}
+
+          <Route
+            path="images"
+            element={<Images />}
+          />
+
+        </Route>
+
+
+        {/* ==========================================
+            UNKNOWN ROUTES
+        ========================================== */}
 
         <Route
           path="*"

@@ -1,54 +1,244 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { supabase } from "../../services/supabase";
 import "./OwnerDashboard.css";
 
 function OwnerDashboard() {
+  const navigate = useNavigate();
+
+  const [business, setBusiness] = useState(null);
+  const [loadingBusiness, setLoadingBusiness] = useState(true);
+
+  useEffect(() => {
+    loadBusinessDetails();
+  }, []);
+
+  async function loadBusinessDetails() {
+    setLoadingBusiness(true);
+
+    const { data, error } = await supabase
+      .from("business_details")
+      .select("*")
+      .limit(1)
+      .maybeSingle();
+
+    if (error) {
+      console.error(
+        "Unable to load business details:",
+        error
+      );
+
+      setBusiness(null);
+      setLoadingBusiness(false);
+
+      return;
+    }
+
+    setBusiness(data || null);
+    setLoadingBusiness(false);
+  }
+
+
+  /* ==================================================
+     BUSINESS VALUES
+     ================================================== */
+
+  const businessName =
+    business?.business_name ||
+    "Keerthi's Pickles";
+
+  const businessTagline =
+    business?.tagline ||
+    "HOMEMADE PICKLES";
+
+  const logoUrl =
+    business?.logo_url ||
+    null;
+
+
+  /* ==================================================
+     LOGOUT
+     ================================================== */
+
+  async function handleLogout() {
+    const confirmed = window.confirm(
+      "Are you sure you want to logout?"
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    const { error } =
+      await supabase.auth.signOut();
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    navigate("/owner/login", {
+      replace: true,
+    });
+  }
+
+
   return (
     <div className="luxury-owner">
 
-      {/* SIDEBAR */}
+
+      {/* ==================================================
+          SIDEBAR
+          ================================================== */}
+
       <aside className="luxury-sidebar">
 
-        <div className="sidebar-brand">
-          <div className="brand-circle">KP</div>
 
-          <div>
-            <h2>Keerthi's</h2>
-            <span>HOMEMADE PICKLES</span>
+        {/* ==================================================
+            BRAND
+            ================================================== */}
+
+        <div className="sidebar-brand">
+
+          <div className="brand-circle">
+
+            {logoUrl ? (
+              <img
+                src={logoUrl}
+                alt={`${businessName} logo`}
+              />
+            ) : (
+              <span>
+                KP
+              </span>
+            )}
+
           </div>
+
+
+          <div className="sidebar-brand-text">
+
+            <h2>
+              {loadingBusiness
+                ? "Keerthi's"
+                : businessName}
+            </h2>
+
+            <span>
+              {loadingBusiness
+                ? "HOMEMADE PICKLES"
+                : businessTagline}
+            </span>
+
+          </div>
+
         </div>
+
 
         <div className="sidebar-line"></div>
 
+
+        {/* ==================================================
+            MENU
+            ================================================== */}
+
         <nav className="luxury-menu">
 
+
+          {/* BUSINESS */}
+
           <Link to="/owner/business">
-            <span className="menu-number">01</span>
-            <span>Business Details</span>
+
+            <span className="menu-number">
+              01
+            </span>
+
+            <span>
+              Business Details
+            </span>
+
           </Link>
+
+
+          {/* PICKLES */}
 
           <Link to="/owner/pickles">
-            <span className="menu-number">02</span>
-            <span>Pickles</span>
+
+            <span className="menu-number">
+              02
+            </span>
+
+            <span>
+              Pickles
+            </span>
+
           </Link>
 
-          <Link to="/owner/videos">
-            <span className="menu-number">03</span>
-            <span>Videos</span>
+
+          {/* OUR KITCHEN */}
+
+          <Link to="/owner/images">
+
+            <span className="menu-number">
+              03
+            </span>
+
+            <span>
+              Our Kitchen
+            </span>
+
           </Link>
 
         </nav>
 
+
+        {/* ==================================================
+            SIDEBAR BOTTOM
+            ================================================== */}
+
         <div className="sidebar-bottom">
+
           <div className="gold-line"></div>
-          <p>Homemade with love</p>
+
+          <p>
+            {business?.tagline ||
+              "Homemade with love"}
+          </p>
+
+
+          {/* LOGOUT */}
+
+          <button
+            type="button"
+            className="sidebar-logout"
+            onClick={handleLogout}
+          >
+
+            <span>
+              Logout
+            </span>
+
+            <span>
+              ↗
+            </span>
+
+          </button>
+
         </div>
 
       </aside>
 
 
-      {/* MAIN */}
+      {/* ==================================================
+          MAIN
+          ================================================== */}
+
       <main className="luxury-main">
+
+
+        {/* ==================================================
+            HEADING
+            ================================================== */}
 
         <div className="luxury-heading">
 
@@ -59,26 +249,38 @@ function OwnerDashboard() {
           <div className="heading-line"></div>
 
           <h1>
-            Keerthi's Pickles
+            {loadingBusiness
+              ? "Keerthi's Pickles"
+              : businessName}
           </h1>
 
           <p>
             Manage your homemade pickle collection,
-            business details and brand videos.
+            business details and kitchen images.
           </p>
 
         </div>
 
 
-        {/* THREE SECTIONS */}
+        {/* ==================================================
+            MANAGEMENT GRID
+            ================================================== */}
 
         <div className="management-grid">
+
+
+          {/* ==================================================
+              BUSINESS
+              ================================================== */}
 
           <Link
             to="/owner/business"
             className="management-card"
           >
-            <div className="card-number">01</div>
+
+            <div className="card-number">
+              01
+            </div>
 
             <div className="card-icon">
               ✦
@@ -89,21 +291,36 @@ function OwnerDashboard() {
             </h2>
 
             <p>
-              Manage your brand information, contact details,
-              logo and main website imagery.
+              Manage your brand information,
+              contact details, logo and
+              website information.
             </p>
 
             <div className="card-action">
-              Manage <span>→</span>
+
+              Manage
+
+              <span>
+                →
+              </span>
+
             </div>
+
           </Link>
 
+
+          {/* ==================================================
+              PICKLES
+              ================================================== */}
 
           <Link
             to="/owner/pickles"
             className="management-card"
           >
-            <div className="card-number">02</div>
+
+            <div className="card-number">
+              02
+            </div>
 
             <div className="card-icon">
               ✦
@@ -114,41 +331,83 @@ function OwnerDashboard() {
             </h2>
 
             <p>
-              Add and manage your homemade pickle varieties,
-              prices, sizes and product images.
+              Add and manage your homemade
+              pickle varieties, prices, sizes
+              and product images.
             </p>
 
             <div className="card-action">
-              Manage <span>→</span>
+
+              Manage
+
+              <span>
+                →
+              </span>
+
             </div>
+
           </Link>
 
 
+          {/* ==================================================
+              OUR KITCHEN
+              ================================================== */}
+
           <Link
-            to="/owner/videos"
+            to="/owner/images"
             className="management-card"
           >
-            <div className="card-number">03</div>
+
+            <div className="card-number">
+              03
+            </div>
 
             <div className="card-icon">
               ✦
             </div>
 
             <h2>
-              Videos
+              Our Kitchen
             </h2>
 
             <p>
-              Upload beautiful videos that showcase your
-              homemade pickle preparation and products.
+              Upload and manage beautiful
+              images that showcase your
+              homemade pickle preparation.
             </p>
 
             <div className="card-action">
-              Manage <span>→</span>
+
+              Manage
+
+              <span>
+                →
+              </span>
+
             </div>
+
           </Link>
 
         </div>
+
+
+        {/* ==================================================
+            MOBILE LOGOUT
+            ================================================== */}
+
+        <button
+          type="button"
+          className="mobile-logout"
+          onClick={handleLogout}
+        >
+
+          Logout
+
+          <span>
+            →
+          </span>
+
+        </button>
 
       </main>
 
